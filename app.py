@@ -9,7 +9,6 @@ tfidf_vectorizer = TfidfVectorizer(stop_words='english')
 tfidf_matrix = tfidf_vectorizer.fit_transform(movies['KEY'])
 cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
-@st.cache_data()
 def get_recommendations(query, cosine_sim=cosine_sim):
     query_vec = tfidf_vectorizer.transform([query])
     cosine_similarities = linear_kernel(query_vec, tfidf_matrix).flatten()
@@ -23,7 +22,6 @@ def get_recommendations(query, cosine_sim=cosine_sim):
 def get_movie_tmdb_link(movie_id):
     return f"https://www.themoviedb.org/movie/{movie_id}"
 
-@st.cache_data()
 def get_movie_poster(movie_id):
     api_key = 'd2a6d95263679c62dda7c1677df1b05d'
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
