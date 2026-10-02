@@ -21,10 +21,11 @@ def get_recommendations(query, cosine_sim=cosine_sim):
     cosine_similarities = linear_kernel(query_vec, tfidf_matrix).flatten()
     sim_scores = list(enumerate(cosine_similarities))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:10] 
+    sim_scores = sim_scores[:10]
     movie_indices = [i[0] for i in sim_scores]
     recommended_movies = [(movies.iloc[index]['movie_id'], movies.iloc[index]['title']) for index in movie_indices]
-    return recommended_movies
+    recommended_movies = [m for m in recommended_movies if m[1].lower() != query.strip().lower()]
+    return recommended_movies[:9]
 
 def get_movie_tmdb_link(movie_id):
     return f"https://www.themoviedb.org/movie/{movie_id}"
