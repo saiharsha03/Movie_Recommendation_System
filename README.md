@@ -16,7 +16,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Poster lookups need a TMDB API key (free from themoviedb.org). Set your own in `app.py`.
+Poster lookups need a TMDB API key (free from themoviedb.org). Put it in `.streamlit/secrets.toml` as `TMDB_API_KEY = "your-key"`, or set a `TMDB_API_KEY` environment variable. Without a key the app still works and shows a placeholder image instead of posters.
 
 ## Limits
 

@@ -2,7 +2,14 @@ import streamlit as st
 import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
+import os
 import requests
+
+def _tmdb_key():
+    try:
+        return st.secrets["TMDB_API_KEY"]
+    except Exception:
+        return os.environ.get("TMDB_API_KEY", "")
 
 movies = pickle.load(open("movies.pkl", "rb"))
 tfidf_vectorizer = TfidfVectorizer(stop_words='english')
@@ -23,7 +30,7 @@ def get_movie_tmdb_link(movie_id):
     return f"https://www.themoviedb.org/movie/{movie_id}"
 
 def get_movie_poster(movie_id):
-    api_key = 'd2a6d95263679c62dda7c1677df1b05d'
+    api_key = _tmdb_key()
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&language=en-US"
     response = requests.get(url)
     if response.status_code == 200:
