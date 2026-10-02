@@ -1,7 +1,23 @@
-A MOVIE RECOMMENDATION SYSTEM:
+# Movie recommendation system
 
-IMPLEMENTED A CONTENT BASED FILTERING USING TF IDF VECTORIZATION
+Content-based movie recommender. Type an actor, director or movie name and get nine similar movies, each with its poster and a link to TMDB.
 
-DEPLOYED ON: [https://movie-recom.streamlit.app/](https://movie-recom-system.streamlit.app/)
+## How it works
 
-DATABASE: SOURCED FROM KAGGLE(TDB_5000)
+- **Data:** the TMDB 5000 movies and credits datasets from Kaggle (`tmdb_5000_movies.csv`, `tmdb_5000_credits.csv`).
+- **Features:** each movie's title, genres, keywords, overview, production companies, release date, tagline, cast and crew are combined into one string, then cleaned with NLTK (punctuation removed, tokens stemmed and lemmatized). `Movie_Recommendation.ipynb` builds this and saves it as `movies.pkl`.
+- **Similarity:** TF-IDF vectors with English stop words removed, ranked by cosine similarity to the query.
+- **App:** `app.py` is a Streamlit page that fetches posters from the TMDB API.
+
+## Run it
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Poster lookups need a TMDB API key (free from themoviedb.org). Set your own in `app.py`.
+
+## Limits
+
+It matches words, not meaning, so a query only finds movies that share vocabulary with it. There are no ratings or user history involved.
